@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: white;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px; /* This width will control the overall size of the calculator area */
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ads-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .ads-section {
+            width: 100px;
+            height: 300px;
+            background-color: #e0e0e0;
+            text-align: center;
+            line-height: 300px;
+            margin: 20px;
+        }
+
+        .top-ads {
+            width: 100%;
+            height: 50px;
+            background-color: #e0e0e0;
+            text-align: center;
+            line-height: 50px;
+            margin-bottom: 20px;
+        }
+
+        .calculator {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 60%; /* Adjust width of the calculator to fit well */
+            margin: 20px 0; /* Add margin for spacing between ads and calculator */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .display {
+            margin-bottom: 20px;
+            text-align: right;
+            width: 100%;
+        }
+
+        #display {
+            width: 100%;
+            padding: 15px;
+            font-size: 2rem;
+            text-align: right;
+            border: none;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            width: 100%;
+        }
+
+        button {
+            padding: 20px;
+            font-size: 1.5rem;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .operator {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .operator:hover {
+            background-color: #45a049;
+        }
+
+        .erase-btn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .erase-btn:hover {
+            background-color: #e53935;
+        }
+
+        /* History Buttons inside the calculator */
+        .history-buttons {
+            margin-top: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .history-btn, .clear-history-btn {
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 40px; /* Smaller width to accommodate the shortened text */
+        }
+
+        .history-btn:hover, .clear-history-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* History Panel changes */
+        .history-panel {
+            display: none;
+            background-color: #f0f0f0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: scroll;
+            width: 100%;
+            z-index: 10; /* Ensure it's on top of the calculator */
+            background-color: white;
+        }
+
+        .ads-bottom {
+            width: 100%;
+            height: 100px;
+            background-color: #e0e0e0;
+            text-align: center;
+            line-height: 100px;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Ads Box -->
+        <div class="top-ads">
+            <p>Top Ads will be placed here</p>
+        </div>
+
+        <!-- Ads on both sides of the calculator -->
+        <div class="ads-container">
+            <!-- Left Ad Section -->
+            <div class="ads-section">
+                <p>Left Ad</p>
+            </div>
+
+            <!-- Calculator -->
+            <div class="calculator">
+                <div class="display">
+                    <input type="text" id="display" disabled>
+                </div>
+                <div class="buttons">
+                    <button class="btn" onclick="appendToDisplay('7')">7</button>
+                    <button class="btn" onclick="appendToDisplay('8')">8</button>
+                    <button class="btn" onclick="appendToDisplay('9')">9</button>
+                    <button class="btn operator" onclick="appendToDisplay('+')">+</button>
+
+                    <button class="btn" onclick="appendToDisplay('4')">4</button>
+                    <button class="btn" onclick="appendToDisplay('5')">5</button>
+                    <button class="btn" onclick="appendToDisplay('6')">6</button>
+                    <button class="btn operator" onclick="appendToDisplay('-')">-</button>
+
+                    <button class="btn" onclick="appendToDisplay('1')">1</button>
+                    <button class="btn" onclick="appendToDisplay('2')">2</button>
+                    <button class="btn" onclick="appendToDisplay('3')">3</button>
+                    <button class="btn operator" onclick="appendToDisplay('*')">*</button>
+
+                    <button class="btn" onclick="appendToDisplay('0')">0</button>
+                    <button class="btn" onclick="appendToDisplay('.')">.</button>
+                    <button class="btn" onclick="calculateResult()">=</button>
+                    <button class="btn operator" onclick="appendToDisplay('/')">/</button>
+
+                    <!-- Erase Button -->
+                    <button class="btn erase-btn" onclick="eraseLast()">C</button>
+                </div>
+
+                <!-- History Buttons inside the calculator -->
+                <div class="history-buttons">
+                    <button class="history-btn" onclick="toggleHistory()">S</button>
+                    <button class="clear-history-btn" onclick="clearHistory()">C</button>
+                </div>
+
+                <!-- History Panel that opens above the calculator -->
+                <div class="history-panel" id="historyPanel">
+                    <ul id="historyList"></ul>
+                </div>
+            </div>
+
+            <!-- Right Ad Section -->
+            <div class="ads-section">
+                <p>Right Ad</p>
+            </div>
+        </div>
+
+        <!-- Ads below the calculator -->
+        <div class="ads-bottom">
+            <p>Ads will be placed here (below the calculator).</p>
+        </div>
+    </div>
+
+    <script>
+        let currentCalculation = '';
+        let history = [];
+
+        function appendToDisplay(value) {
+            currentCalculation += value;
+            document.getElementById('display').value = currentCalculation;
+        }
+
+        function calculateResult() {
+            try {
+                const result = eval(currentCalculation);
+                history.unshift(`${currentCalculation} = ${result}`);
+                document.getElementById('display').value = result;
+                currentCalculation = ''; // reset after calculation
+            } catch (error) {
+                document.getElementById('display').value = 'Error';
+                currentCalculation = ''; // reset on error
+            }
+        }
+
+        // Erase the last character from the display
+        function eraseLast() {
+            currentCalculation = currentCalculation.slice(0, -1);
+            document.getElementById('display').value = currentCalculation;
+        }
+
+        function toggleHistory() {
+            const historyPanel = document.getElementById('historyPanel');
+            historyPanel.style.display = (historyPanel.style.display === 'none' || historyPanel.style.display === '') ? 'block' : 'none';
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+            history.forEach(entry => {
+                const li = document.createElement('li');
+                li.textContent = entry;
+                historyList.appendChild(li);
+            });
+        }
+
+        function clearHistory() {
+            history = [];
+            renderHistory();
+            toggleHistory();
+        }
+
+        // Add keyboard functionality
+        document.addEventListener('keydown', function(event) {
+            const key = event.key;
+            if (key >= '0' && key <= '9') {
+                appendToDisplay(key);
+            } else if (key === '+' || key === '-' || key === '*' || key === '/') {
+                appendToDisplay(key);
+            } else if (key === 'Enter') {
+                calculateResult();
+            } else if (key === 'Backspace') {
+                eraseLast();
+            } else if (key === '.') {
+                appendToDisplay('.');
+            }
+        });
+    </script>
+</body>
+</html>
